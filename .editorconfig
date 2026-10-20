@@ -1,0 +1,185 @@
+# .editorconfig – настройки стиля кода для C# проектов
+
+root = true
+
+[*]
+charset = utf-8
+indent_style = tab
+indent_size = 4
+tab_width = 4
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# ------------------- Общие настройки C# -------------------
+[*.cs]
+
+# Отступы
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+# Кодировка
+charset = utf-8
+
+# Фигурные скобки – на новой строке (Allman)
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializer = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+
+# Использование var – никогда (явные типы)
+csharp_style_var_for_built_in_types = false:error
+csharp_style_var_when_type_is_apparent = false:error
+csharp_style_var_elsewhere = false:error
+
+# Модификаторы доступа – всегда явно
+dotnet_style_require_accessibility_modifiers = always:error
+
+# this/base – только при необходимости
+csharp_style_qualified_member_access = false:silent
+dotnet_style_qualification_for_field = false:silent
+dotnet_style_qualification_for_property = false:silent
+dotnet_style_qualification_for_method = false:silent
+dotnet_style_qualification_for_event = false:silent
+
+# Пробелы
+csharp_space_after_keywords = true
+csharp_space_before_method_call_parentheses = false
+csharp_space_before_method_declaration_parentheses = false
+csharp_space_before_constructor_call_parentheses = false
+csharp_space_before_constructor_declaration_parentheses = false
+csharp_space_before_indexer_parameter_list_parentheses = false
+csharp_space_around_binary_operators = before_and_after
+csharp_space_around_declaration_statements = do_not_ignore
+
+# Пустые строки между членами (по стандарту – одна)
+csharp_blank_lines_between_members = 1
+
+# Максимальная длина строки (стандарт 120)
+csharp_max_line_length = 120
+
+# Выражения тела (предпочитать =>)
+csharp_style_expression_bodied_methods = true:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_indexers = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = false:silent
+csharp_style_expression_bodied_lambdas = true:suggestion
+csharp_style_expression_bodied_local_functions = false:silent
+
+# Предпочитать string.Empty, nameof, throw выражение
+csharp_style_prefer_string_empty = true:suggestion
+csharp_style_prefer_nameof = true:suggestion
+csharp_style_prefer_throw_expression = true:suggestion
+
+# Сортировка using – алфавит, удаление неиспользуемых, размещение внутри namespace
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+csharp_using_directive_placement = inside_namespace
+
+# Правила для удаления неиспользуемых using (IDE0005)
+dotnet_diagnostic.IDE0005.severity = warning
+
+# ------------------- Именование (Naming Rules) -------------------
+# Общие стили
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+dotnet_naming_style.camel_case.capitalization = camel_case
+dotnet_naming_style.camel_case_with_underscore.capitalization = camel_case
+dotnet_naming_style.camel_case_with_underscore.required_prefix = _
+dotnet_naming_style.all_upper.capitalization = all_upper
+dotnet_naming_style.interface_style.capitalization = pascal_case
+dotnet_naming_style.interface_style.required_prefix = I
+
+# Правила для разных видов символов
+
+# Классы, структуры, интерфейсы, перечисления, делегаты, методы, свойства – PascalCase
+dotnet_naming_rule.members_should_be_pascal_case.severity = warning
+dotnet_naming_rule.members_should_be_pascal_case.symbols = public_members
+dotnet_naming_rule.members_should_be_pascal_case.style = pascal_case
+dotnet_naming_symbols.public_members.applicable_kinds = class, struct, interface, enum, delegate, method, property
+dotnet_naming_symbols.public_members.applicable_accessibilities = public, protected, internal, protected_internal
+
+# Интерфейсы – I + PascalCase
+dotnet_naming_rule.interfaces_should_have_i_prefix.severity = warning
+dotnet_naming_rule.interfaces_should_have_i_prefix.symbols = interfaces
+dotnet_naming_rule.interfaces_should_have_i_prefix.style = interface_style
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+
+# Приватные поля – _camelCase
+dotnet_naming_rule.private_fields_should_be_camel_case_underscore.severity = warning
+dotnet_naming_rule.private_fields_should_be_camel_case_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case_underscore.style = camel_case_with_underscore
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+# Защищённые поля – camelCase (без подчёркивания)
+dotnet_naming_rule.protected_fields_should_be_camel_case.severity = warning
+dotnet_naming_rule.protected_fields_should_be_camel_case.symbols = protected_fields
+dotnet_naming_rule.protected_fields_should_be_camel_case.style = camel_case
+dotnet_naming_symbols.protected_fields.applicable_kinds = field
+dotnet_naming_symbols.protected_fields.applicable_accessibilities = protected
+
+# Публичные поля – PascalCase
+dotnet_naming_rule.public_fields_should_be_pascal_case.severity = warning
+dotnet_naming_rule.public_fields_should_be_pascal_case.symbols = public_fields
+dotnet_naming_rule.public_fields_should_be_pascal_case.style = pascal_case
+dotnet_naming_symbols.public_fields.applicable_kinds = field
+dotnet_naming_symbols.public_fields.applicable_accessibilities = public, internal, protected_internal
+
+# Параметры – camelCase
+dotnet_naming_rule.parameters_should_be_camel_case.severity = warning
+dotnet_naming_rule.parameters_should_be_camel_case.symbols = parameters
+dotnet_naming_rule.parameters_should_be_camel_case.style = camel_case
+dotnet_naming_symbols.parameters.applicable_kinds = parameter
+
+# Локальные переменные – _camelCase
+dotnet_naming_rule.local_variables_should_be_camel_case_underscore.severity = warning
+dotnet_naming_rule.local_variables_should_be_camel_case_underscore.symbols = local_variables
+dotnet_naming_rule.local_variables_should_be_camel_case_underscore.style = camel_case_with_underscore
+dotnet_naming_symbols.local_variables.applicable_kinds = local
+
+# Константы – UPPER_CASE
+dotnet_naming_rule.constants_should_be_upper_case.severity = warning
+dotnet_naming_rule.constants_should_be_upper_case.symbols = constants
+dotnet_naming_rule.constants_should_be_upper_case.style = all_upper
+dotnet_naming_symbols.constants.applicable_kinds = field
+dotnet_naming_symbols.constants.required_modifiers = const
+dotnet_naming_symbols.constants.applicable_accessibilities = public, private, protected, internal, protected_internal
+
+# События – camelCase
+dotnet_naming_rule.events_should_be_camel_case.severity = warning
+dotnet_naming_rule.events_should_be_camel_case.symbols = events
+dotnet_naming_rule.events_should_be_camel_case.style = camel_case
+dotnet_naming_symbols.events.applicable_kinds = event
+dotnet_naming_symbols.events.applicable_accessibilities = public, protected, internal, protected_internal
+
+# ------------------- Порядок членов (StyleCop) -------------------
+dotnet_diagnostic.SA1201.severity = warning
+dotnet_diagnostic.SA1202.severity = warning
+dotnet_diagnostic.SA1203.severity = warning
+dotnet_diagnostic.SA1204.severity = warning
+
+# ------------------- Комментарии (XML-документация) -------------------
+dotnet_diagnostic.SA1600.severity = warning
+dotnet_diagnostic.SA1601.severity = warning
+dotnet_diagnostic.SA1602.severity = warning
+dotnet_diagnostic.SA1604.severity = warning
+dotnet_diagnostic.SA1605.severity = warning
+dotnet_diagnostic.SA1606.severity = warning
+dotnet_diagnostic.SA1607.severity = warning
+dotnet_diagnostic.SA1608.severity = warning
+
+# ------------------- Инициализация полей -------------------
+dotnet_diagnostic.CS0649.severity = error
+
+# ------------------- Дополнительные настройки качества -------------------
+csharp_style_prefer_throw_expression = true:suggestion
+dotnet_diagnostic.IDE0044.severity = warning
+
+# ------------------- Правило для using внутри namespace (SA1200) -------------------
+dotnet_diagnostic.SA1200.severity = warning
