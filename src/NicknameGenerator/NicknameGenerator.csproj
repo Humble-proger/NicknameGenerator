@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
+    <RootNamespace>NicknameGenerator</RootNamespace>
+    <AssemblyName>NicknameGenerator</AssemblyName>
+
+    <PackageId>NicknameGenerator</PackageId>
+    <Version>0.1.0-alpha</Version>
+    <Description>Deterministic HMAC-based nickname generator with minimal collisions. Works in ASP.NET Core, console apps, and Unity (netstandard2.0).</Description>
+    <PackageTags>nickname;username;hmac;deterministic;unity;aspnet;netstandard</PackageTags>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
