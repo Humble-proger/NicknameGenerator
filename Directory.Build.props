@@ -11,5 +11,6 @@
     <Authors>Humble-proger</Authors>
     <Company>Pulis</Company>
     <RepositoryType>git</RepositoryType>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 </Project>
