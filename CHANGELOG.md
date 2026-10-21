@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `IRetryableNicknameGenerator.Generate(Guid userId, int attempt)` — retry index for deterministic collision handling. `attempt = 0` produces the same output as
+  v1; each `attempt > 0` produces an independent, deterministic nickname from
+  the same space.
+- `RetryableNicknameGeneratorExtensions.GenerateWithRetry` — convenience for the common
+  "try until available" pattern.
+- `IRetryableNicknameGenerator.GenerateParts(Guid userId, int attempt)` - same as `IRetryableNicknameGenerator.Generate(Guid userId, int attempt)`, but returns structured parts.
+
 ## [0.1.0-alpha] - 2026-10-21
 
 ### Added

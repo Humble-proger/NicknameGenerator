@@ -93,6 +93,38 @@ var gen = new RandomNicknameGenerator(new NicknameOptions());
 string preview = gen.Generate();   // different every call, no salt needed
 ```
 
+### Handling collisions
+
+Nickname space is huge (`60 × 60 × 2^(8·SuffixBytes)`), but in a multi-tenant
+system "already taken" can still happen — usually because users pick nicknames
+themselves. Deterministic retry pattern:
+
+```csharp
+string nick = nicknameGenerator.GenerateWithRetry(
+    userId,
+    candidate => !db.Users.Any(u => u.Nickname == candidate));
+
+await db.Users.AddAsync(new User { Id = userId, Nickname = nick });
+```
+
+If you prefer to control the loop yourself:
+
+```csharp
+for (int attempt = 0; attempt < 16; attempt++)
+{
+    string candidate = nicknameGenerator.Generate(userId, attempt);
+    if (await IsAvailableAsync(candidate))
+    {
+        return candidate;
+    }
+}
+throw new InvalidOperationException("No free nickname");
+```
+
+⚠️ **If you use `attempt > 0`, persist the attempt value alongside the user.**
+`Generate(userId)` returns the `attempt = 0` nickname, which may differ from
+the one you stored on retry #3.
+
 ---
 
 ## How it works
