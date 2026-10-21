@@ -79,13 +79,22 @@ namespace NicknameGenerator.DependencyInjection
 
 		private static IServiceCollection AddHmacGenerator(this IServiceCollection services)
 		{
-			services.TryAddSingleton<INicknameGenerator>(sp =>
+			if (services.Any(sd => sd.ServiceType == typeof(IRetryableNicknameGenerator)))
+			{
+				services.TryAddSingleton<INicknameGenerator>(sp => sp.GetRequiredService<IRetryableNicknameGenerator>());
+				return services;
+			}
+			
+			services.TryAddSingleton(sp =>
 			{
 				NicknameOptions _options = sp.GetRequiredService<IOptions<NicknameOptions>>().Value;
-
-				IWordListProvider? _wordListProvider = sp.GetService<IWordListProvider>();
-				return new HmacNicknameGenerator(_options, _wordListProvider);
+				IWordListProvider? _provider = sp.GetService<IWordListProvider>();
+				return new HmacNicknameGenerator(_options, _provider);
 			});
+
+			services.TryAddSingleton<IRetryableNicknameGenerator>(sp => sp.GetRequiredService<HmacNicknameGenerator>());
+			services.TryAddSingleton<INicknameGenerator>(sp => sp.GetRequiredService<HmacNicknameGenerator>());
+
 			return services;
 		}
 
