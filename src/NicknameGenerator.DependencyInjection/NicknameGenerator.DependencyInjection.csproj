@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\NicknameGenerator\NicknameGenerator.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <RootNamespace>NicknameGenerator.DependencyInjection</RootNamespace>
+    <AssemblyName>NicknameGenerator.DependencyInjection</AssemblyName>
+
+    <PackageId>NicknameGenerator.DependencyInjection</PackageId>
+    <Version>0.1.0-alpha</Version>
+    <Description>Dependency injection extensions for NicknameGenerator. Registers INicknameGenerator and IRandomNicknameGenerator with IOptions validation.</Description>
+    <PackageTags>nickname;username;hmac;deterministic;di;dependency-injection;aspnetcore</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+</Project>

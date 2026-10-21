@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FCB877E3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NicknameGenerator.Tests", "tests\NicknameGenerator.Tests\NicknameGenerator.Tests.csproj", "{C2C85AA4-D27B-49B9-BEA7-7D7B4A7035CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NicknameGenerator.DependencyInjection", "src\NicknameGenerator.DependencyInjection\NicknameGenerator.DependencyInjection.csproj", "{A7A17DAE-40EA-45FD-A7B2-66F04BFB213B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NicknameGenerator.DependencyInjection.Tests", "tests\NicknameGenerator.DependencyInjection.Tests\NicknameGenerator.DependencyInjection.Tests.csproj", "{582499E9-16B6-4977-8BE3-959021470B79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,19 @@ Global
 		{C2C85AA4-D27B-49B9-BEA7-7D7B4A7035CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2C85AA4-D27B-49B9-BEA7-7D7B4A7035CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2C85AA4-D27B-49B9-BEA7-7D7B4A7035CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7A17DAE-40EA-45FD-A7B2-66F04BFB213B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7A17DAE-40EA-45FD-A7B2-66F04BFB213B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7A17DAE-40EA-45FD-A7B2-66F04BFB213B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7A17DAE-40EA-45FD-A7B2-66F04BFB213B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{582499E9-16B6-4977-8BE3-959021470B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{582499E9-16B6-4977-8BE3-959021470B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{582499E9-16B6-4977-8BE3-959021470B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{582499E9-16B6-4977-8BE3-959021470B79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7458168D-F9E5-41FD-BADC-A65E395F58F7} = {1CCDC2FD-03C5-4ECC-8EEC-E0F81622E49B}
 		{C2C85AA4-D27B-49B9-BEA7-7D7B4A7035CD} = {FCB877E3-EA6E-4B16-A254-95E623E1D25A}
+		{A7A17DAE-40EA-45FD-A7B2-66F04BFB213B} = {1CCDC2FD-03C5-4ECC-8EEC-E0F81622E49B}
+		{582499E9-16B6-4977-8BE3-959021470B79} = {FCB877E3-EA6E-4B16-A254-95E623E1D25A}
 	EndGlobalSection
 EndGlobal
