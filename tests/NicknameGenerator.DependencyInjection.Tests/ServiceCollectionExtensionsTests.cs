@@ -100,6 +100,40 @@ namespace NicknameGenerator.DependencyInjection.Tests
 			Assert.Equal("always-the-same", _gen.Generate(Guid.NewGuid()));
 		}
 
+		[Fact]
+		public void AllThreeRegistrations_ShareSameInstance()
+		{
+			ServiceCollection _services = new ();
+			_services.AddNicknameGenerator(o => o.SecretSalt = VALID_SALT);
+			ServiceProvider _provider = _services.BuildServiceProvider();
+
+			HmacNicknameGenerator _concrete = _provider.GetRequiredService<HmacNicknameGenerator>();
+			INicknameGenerator _baseIf = _provider.GetRequiredService<INicknameGenerator>();
+			IRetryableNicknameGenerator _retryIf = _provider.GetRequiredService<IRetryableNicknameGenerator>();
+
+			Assert.Same(_concrete, _baseIf);
+			Assert.Same(_concrete, _retryIf);
+		}
+
+		[Fact]
+		public void RetryableGenerator_WorksThroughDI()
+		{
+			ServiceCollection _services = new ();
+			_services.AddNicknameGenerator(o => o.SecretSalt = VALID_SALT);
+			ServiceProvider _provider = _services.BuildServiceProvider();
+
+			IRetryableNicknameGenerator _gen = _provider.GetRequiredService<IRetryableNicknameGenerator>();
+			Guid _userId = Guid.Parse("550e8400-e29b-41d4-a716-446655440000");
+
+			// attempt=0 — совпадает с golden value
+			Assert.Equal("FrostyElk_00z5ReQiH", _gen.Generate(_userId, 0));
+
+			// attempt=1 — другой ник, но детерминированный
+			string _a1 = _gen.Generate(_userId, 1);
+			Assert.NotEqual(_a1, _gen.Generate(_userId, 0));
+			Assert.Equal(_a1, _gen.Generate(_userId, 1));
+		}
+
 		private sealed class StubProvider : IWordListProvider
 		{
 			private readonly WordList _list;
