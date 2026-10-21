@@ -35,10 +35,16 @@ namespace NicknameGenerator.Options
         /// </summary>
         /// <exception cref="ArgumentException">In case SecretSalt is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">В случае если аргументы выйдут за граничные условия.</exception>
-        public void Validate()
+        public void Validate(bool requireSecretSalt = true)
         {
-            if (string.IsNullOrWhiteSpace(SecretSalt))
-                throw new ArgumentException($"{nameof(SecretSalt)} is required.", nameof(SecretSalt));
+            if (requireSecretSalt)
+            {
+                if (string.IsNullOrWhiteSpace(SecretSalt))
+                    throw new ArgumentException($"{nameof(SecretSalt)} is required.", nameof(SecretSalt));
+                
+                if (System.Text.Encoding.UTF8.GetByteCount(SecretSalt) < 32)
+                    throw new ArgumentException($"{nameof(SecretSalt)} must be at least 32 bytes when UTF-8 encoded.", nameof(SecretSalt));
+            }
 
             if (WordListVersion < 1)
                 throw new ArgumentOutOfRangeException(nameof(WordListVersion), WordListVersion, "Must be >= 1.");
