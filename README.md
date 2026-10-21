@@ -1,7 +1,7 @@
 # NicknameGenerator
 
 [![CI](https://github.com/Humble-proger/NicknameGenerator/actions/workflows/ci.yml/badge.svg)](https://github.com/Humble-proger/NicknameGenerator/actions/workflows/ci.yml)
-[![NuGet](https://img.shields.io/nuget/v/NicknameGenerator.svg)](https://www.nuget.org/packages/NicknameGenerator)
+[![NuGet](https://img.shields.io/nuget/v/Humble-proger.NicknameGenerator.svg)](https://www.nuget.org/packages/Humble-proger.NicknameGenerator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Deterministic, collision-resistant nickname generator for .NET and Unity.**
