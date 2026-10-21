@@ -28,7 +28,7 @@ namespace NicknameGenerator.Tests
 			{
 				// Vary only the last byte of the Guid
 				Guid _g = new(0, 0, 0, [0, 0, 0, 0, 0, 0, 0, (byte)_i]);
-				NicknameParts _parts = _gen.GenerateParts(_g);
+				NicknameParts _parts = _gen.GenerateParts(_g, 0);
 				_adjSet.Add(_parts.Adjective);
 				_nounSet.Add(_parts.Noun);
 			}
@@ -48,7 +48,7 @@ namespace NicknameGenerator.Tests
 			Guid _a = Guid.Parse("00000000-0000-0000-0000-000000000000");
 			Guid _b = Guid.Parse("00000000-0000-0000-0000-000000000001");
 
-			Assert.NotEqual(_gen.GenerateParts(_a).Suffix, _gen.GenerateParts(_b).Suffix);
+			Assert.NotEqual(_gen.GenerateParts(_a, 0).Suffix, _gen.GenerateParts(_b, 0).Suffix);
 		}
 	}
 }

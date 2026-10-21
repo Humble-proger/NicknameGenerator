@@ -99,9 +99,16 @@ namespace NicknameGenerator.Tests
 		public void GenerateParts_ToString_MatchesGenerate()
 		{
 			HmacNicknameGenerator _gen = CreateDefault();
-			NicknameParts _parts = _gen.GenerateParts(_testGuid);
+			NicknameParts _parts = _gen.GenerateParts(_testGuid, 0);
 			Assert.Equal($"{_parts.Adjective}{_parts.Noun}_{_parts.Suffix}", _gen.Generate(_testGuid));
 		}
 
+		[Fact]
+		public void HmacGenerator_ImplementsBothInterfaces()
+		{
+			HmacNicknameGenerator _gen = CreateDefault();
+			Assert.IsAssignableFrom<INicknameGenerator>(_gen);
+			Assert.IsAssignableFrom<IRetryableNicknameGenerator>(_gen);
+		}
 	}
 }

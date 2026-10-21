@@ -1,5 +1,6 @@
 namespace NicknameGenerator.Tests
 {
+	using NicknameGenerator.Abstractions;
 	using NicknameGenerator.Options;
 	using Xunit;
 
@@ -33,6 +34,14 @@ namespace NicknameGenerator.Tests
 			RandomNicknameGenerator _gen = CreateDefault();
 			string _nick = _gen.Generate();
 			Assert.Matches("^[A-Za-z0-9]+_[0-9a-zA-Z]{9}$", _nick);
+		}
+
+		[Fact]
+		public void RandomGenerator_DoesNotImplementRetryable()
+		{
+			RandomNicknameGenerator _gen = CreateDefault();
+			Assert.IsAssignableFrom<IRandomNicknameGenerator>(_gen);
+			Assert.IsNotAssignableFrom<IRetryableNicknameGenerator>(_gen);
 		}
 	}
 }

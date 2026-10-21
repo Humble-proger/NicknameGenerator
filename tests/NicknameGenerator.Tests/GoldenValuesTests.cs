@@ -16,6 +16,14 @@ namespace NicknameGenerator.Tests
 			Assert.Equal(expected, _gen.Generate(userId));
 		}
 
+		[Theory]
+		[MemberData(nameof(GoldenPairs_v1_attempts))]
+		public void VerifyGoldenValues_v1_attempts_DoNotChange(Guid userId, int attempt, string expected)
+		{
+			HmacNicknameGenerator _gen = new (new NicknameOptions { SecretSalt = TEST_SALT });
+			Assert.Equal(expected, _gen.Generate(userId, attempt));
+		}
+
 		public static IEnumerable<object[]> GoldenPairs_v1()
 		{
 			yield return new object[] { Guid.Empty, "PuffyRobin_1bpdIBZwE" };
@@ -26,6 +34,13 @@ namespace NicknameGenerator.Tests
 			yield return new object[] { Guid.Parse("00000000-0000-0000-0000-000000000003"), "CleverWolf_02J5sKNBs" };
 			yield return new object[] { Guid.Parse("10000000-0000-0000-0000-000000000000"), "FancyPenguin_1gvmemFlh" };
 			yield return new object[] { Guid.Parse("80000000-0000-0000-0000-000000000000"), "BriskOwl_0TbKEPXAd" };
+		}
+
+		public static IEnumerable<object[]> GoldenPairs_v1_attempts()
+		{
+			yield return new object[] { Guid.Empty, 1, "SillyDove_0L2ictlYw" };
+			yield return new object[] { Guid.Parse("550e8400-e29b-41d4-a716-446655440000"), 1, "SpicyCrow_0j9XCwIfs" };
+			yield return new object[] { Guid.Parse("550e8400-e29b-41d4-a716-446655440000"), 2, "SpicyDeer_0dN9URnH9" };
 		}
 
 		private readonly ITestOutputHelper _output;

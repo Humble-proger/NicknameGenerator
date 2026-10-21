@@ -84,7 +84,7 @@ namespace NicknameGenerator.Tests
 			for (int _i = 0; _i < count; _i++)
 			{
 				_rng.NextBytes(_guidBytes);
-				yield return _gen.GenerateParts(new Guid(_guidBytes));
+				yield return _gen.GenerateParts(new Guid(_guidBytes), 0);
 			}
 		}
 
