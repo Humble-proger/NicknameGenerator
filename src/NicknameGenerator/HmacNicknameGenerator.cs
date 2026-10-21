@@ -15,7 +15,7 @@ namespace NicknameGenerator
 	/// The same user identifier always produces the same nickname, given identical
 	/// options (salt, word list version, suffix length).
 	/// </summary>
-	public sealed class HmacNicknameGenerator : INicknameGenerator
+	public sealed class HmacNicknameGenerator : IRetryableNicknameGenerator
 	{
 		private readonly byte[] _salt;
 		private readonly IWordListProvider _wordListProvider;
@@ -43,14 +43,22 @@ namespace NicknameGenerator
 
 		public string Generate(Guid userId)
 		{
-			NicknameParts _parts = GenerateParts(userId);
+			NicknameParts _parts = GenerateParts(userId, 0);
 			return $"{_parts.Adjective}{_parts.Noun}{_options.Separator}{_parts.Suffix}";
 		}
 
-		internal NicknameParts GenerateParts(Guid userId)
+		public string Generate(Guid userId, int attempt)
 		{
-			byte[] _guidBytes = userId.ToByteArray();
-			byte[] _hash = ComputeHash(_guidBytes);
+			NicknameParts _parts = GenerateParts(userId, attempt);
+			return $"{_parts.Adjective}{_parts.Noun}{_options.Separator}{_parts.Suffix}";
+		}
+
+		public NicknameParts GenerateParts(Guid userId, int attempt)
+		{
+			if (attempt < 0)
+				throw new ArgumentOutOfRangeException(nameof(attempt), attempt, "Must be >= 0.");
+			
+			byte[] _hash = ComputeHash(userId.ToByteArray(), attempt);
 
 			int _adjIndex = ((_hash[0] << 8) | _hash[1]) % _wordList.Adjectives.Count;
 			int _nounIndex = ((_hash[2] << 8) | _hash[3]) % _wordList.Nouns.Count;
@@ -62,6 +70,26 @@ namespace NicknameGenerator
 				_wordList.Nouns[_nounIndex],
 				_suffix
 			);
+		}
+
+		private byte[] ComputeHash(byte[] data, int attempt)
+		{
+			byte[] _input = attempt == 0 ? data : AppendAttempt(data, attempt);
+			return ComputeHash(_input);
+		}
+
+		private byte[] AppendAttempt(byte[] data, int attempt)
+		{
+			byte[] _input = new byte[data.Length + 4];
+			Buffer.BlockCopy(data, 0, _input, 0, data.Length);
+
+			uint _ua = (uint) attempt;
+			_input[data.Length] = (byte)(_ua >> 24);
+			_input[data.Length + 1] = (byte)(_ua >> 16);
+			_input[data.Length + 2] = (byte)(_ua >> 8);
+			_input[data.Length + 3] = (byte) _ua;
+
+			return _input;
 		}
 
 		private byte[] ComputeHash(byte[] data)
