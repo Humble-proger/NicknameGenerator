@@ -20,8 +20,8 @@ and platforms. Works in ASP.NET Core, console apps, Worker Service, and Unity
 ## Install
 
 ```
-dotnet add package NicknameGenerator
-dotnet add package NicknameGenerator.DependencyInjection   # for ASP.NET / DI
+dotnet add package Humble-proger.NicknameGenerator
+dotnet add package Humble-proger.NicknameGenerator.DependencyInjection   # for ASP.NET / DI
 ```
 
 For Unity: build the `NicknameGenerator` project, or install via NuGetForUnity.
