@@ -57,7 +57,7 @@ namespace NicknameGenerator
 		{
 			if (attempt < 0)
 				throw new ArgumentOutOfRangeException(nameof(attempt), attempt, "Must be >= 0.");
-			
+
 			byte[] _hash = ComputeHash(userId.ToByteArray(), attempt);
 
 			int _adjIndex = ((_hash[0] << 8) | _hash[1]) % _wordList.Adjectives.Count;
@@ -83,11 +83,11 @@ namespace NicknameGenerator
 			byte[] _input = new byte[data.Length + 4];
 			Buffer.BlockCopy(data, 0, _input, 0, data.Length);
 
-			uint _ua = (uint) attempt;
+			uint _ua = (uint)attempt;
 			_input[data.Length] = (byte)(_ua >> 24);
 			_input[data.Length + 1] = (byte)(_ua >> 16);
 			_input[data.Length + 2] = (byte)(_ua >> 8);
-			_input[data.Length + 3] = (byte) _ua;
+			_input[data.Length + 3] = (byte)_ua;
 
 			return _input;
 		}

@@ -20,7 +20,7 @@ namespace NicknameGenerator.Tests
 		[MemberData(nameof(GoldenPairs_v1_attempts))]
 		public void VerifyGoldenValues_v1_attempts_DoNotChange(Guid userId, int attempt, string expected)
 		{
-			HmacNicknameGenerator _gen = new (new NicknameOptions { SecretSalt = TEST_SALT });
+			HmacNicknameGenerator _gen = new(new NicknameOptions { SecretSalt = TEST_SALT });
 			Assert.Equal(expected, _gen.Generate(userId, attempt));
 		}
 

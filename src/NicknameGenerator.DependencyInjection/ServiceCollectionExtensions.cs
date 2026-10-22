@@ -84,7 +84,7 @@ namespace NicknameGenerator.DependencyInjection
 				services.TryAddSingleton<INicknameGenerator>(sp => sp.GetRequiredService<IRetryableNicknameGenerator>());
 				return services;
 			}
-			
+
 			services.TryAddSingleton(sp =>
 			{
 				NicknameOptions _options = sp.GetRequiredService<IOptions<NicknameOptions>>().Value;

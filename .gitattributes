@@ -1,0 +1,24 @@
+# Normalize line endings for source files, regardless of OS or git config.
+# C# source files use CRLF per .editorconfig (end_of_line = crlf).
+*.cs        text eol=crlf
+*.csproj    text eol=crlf
+*.sln       text eol=crlf
+*.props     text eol=crlf
+*.targets   text eol=crlf
+*.json      text eol=crlf
+*.xml       text eol=crlf
+*.txt       text eol=crlf
+*.editorconfig text eol=crlf
+.gitignore  text eol=lf
+.gitattributes text eol=lf
+
+# Markdown and YAML stay LF — tools handle CRLF poorly.
+*.md        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+
+# Binary
+*.png       binary
+*.ico       binary
+*.nupkg     binary
+*.snupkg    binary

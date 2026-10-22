@@ -103,7 +103,7 @@ namespace NicknameGenerator.DependencyInjection.Tests
 		[Fact]
 		public void AllThreeRegistrations_ShareSameInstance()
 		{
-			ServiceCollection _services = new ();
+			ServiceCollection _services = new();
 			_services.AddNicknameGenerator(o => o.SecretSalt = VALID_SALT);
 			ServiceProvider _provider = _services.BuildServiceProvider();
 
@@ -118,7 +118,7 @@ namespace NicknameGenerator.DependencyInjection.Tests
 		[Fact]
 		public void RetryableGenerator_WorksThroughDI()
 		{
-			ServiceCollection _services = new ();
+			ServiceCollection _services = new();
 			_services.AddNicknameGenerator(o => o.SecretSalt = VALID_SALT);
 			ServiceProvider _provider = _services.BuildServiceProvider();
 
