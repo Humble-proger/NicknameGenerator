@@ -1149,15 +1149,15 @@
           "xunit.extensibility.core": "[2.5.3]"
         }
       },
-      "nicknamegenerator": {
+      "Humble-proger.NicknameGenerator": {
         "type": "Project"
       },
-      "nicknamegenerator.dependencyinjection": {
+      "Humble-proger.NicknameGenerator.DependencyInjection": {
         "type": "Project",
         "dependencies": {
+          "Humble-proger.NicknameGenerator": "[0.2.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.0.1, )",
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "[8.0.0, )",
-          "NicknameGenerator": "[0.1.0-alpha, )"
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "[8.0.0, )"
         }
       }
     }

@@ -5,8 +5,8 @@
     <RootNamespace>NicknameGenerator</RootNamespace>
     <AssemblyName>NicknameGenerator</AssemblyName>
 
-    <PackageId>NicknameGenerator</PackageId>
-    <Version>0.1.0-alpha.1</Version>
+    <PackageId>Humble-proger.NicknameGenerator</PackageId>
+    <Version>0.2.0</Version>
     <Description>Deterministic HMAC-based nickname generator with minimal collisions. Works in ASP.NET Core, console apps, and Unity (netstandard2.0).</Description>
     <PackageTags>nickname;username;hmac;deterministic;unity;aspnet;netstandard</PackageTags>
 

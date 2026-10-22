@@ -37,6 +37,7 @@ namespace NicknameGenerator
 
 		public string Generate()
 		{
+			//  4 bytes for word indices + SuffixBytes (max 10) for suffix = 14. Use 16 for alignment.
 			byte[] _buffer = new byte[16];
 			_rng.GetBytes(_buffer);
 

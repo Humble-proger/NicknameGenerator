@@ -7,7 +7,7 @@ namespace NicknameGenerator.Internal
 
 	using NicknameGenerator.Abstractions;
 
-	public sealed class EmbeddedWordListProvider : IWordListProvider
+	internal sealed class EmbeddedWordListProvider : IWordListProvider
 	{
 		private static readonly ConcurrentDictionary<int, Lazy<WordList>> _cache = new();
 

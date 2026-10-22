@@ -64,6 +64,7 @@ builder.Services.AddNicknameGenerator(o =>
 
 ```csharp
 using NicknameGenerator;
+using NicknameGenerator.Options;
 
 var gen = new HmacNicknameGenerator(new NicknameOptions
 {
@@ -78,6 +79,7 @@ string nickname = gen.Generate(Guid.Parse("550e8400-e29b-41d4-a716-446655440000"
 
 ```csharp
 using NicknameGenerator;
+using NicknameGenerator.Options;
 
 var gen = new HmacNicknameGenerator(new NicknameOptions { SecretSalt = salt });
 label.text = gen.Generate(userId);
@@ -172,13 +174,15 @@ Probability of **at least one** collision among `U` users (birthday bound):
 | 7 | 10 chars | 2.59 × 10²⁰ | ~0% | ~0.00000019% | 0.0019% |
 | 8 | 11 chars | 6.64 × 10²² | ~0% | ~0% | 0.0000075% |
 
-**Rule of thumb:** `SuffixBytes = 6` is safe for up to ~10⁸ users.
-Bump to 7 if you expect more, or if your IDs are adversarial.
+**Rule of thumb:** `SuffixBytes = 6` is fine up to ~10⁷ users (0.00005%
+collision probability). For 10⁸+ users, use `SuffixBytes = 7` or `8`.
 
-Note: `SuffixBytes = 5` produces suffixes of fixed length 7; the first
-character is biased toward `'0'` and `'1'` because `2^40 / 62^6 ≈ 10.6`
-— no entropy is lost, only the encoding is slightly non-uniform. This is
-by design and covered by golden-value tests.
+Note: with `SuffixBytes = 5`, the suffix encodes 40 bits into 7 base62 chars.
+Since `62^6 < 2^40 < 62^7`, the first character takes values `'0'`..`'9'` and
+`'a'`..`'j'` (20 possibilities) — no entropy is lost, only the encoding is
+slightly non-uniform. With `SuffixBytes = 6` (default), the first character
+is always `'0'` or `'1'` for the same reason, and the remaining 8 characters
+carry the full 48 bits. This is by design and covered by golden-value tests.
 
 ---
 

@@ -18,7 +18,6 @@ namespace NicknameGenerator
 	public sealed class HmacNicknameGenerator : IRetryableNicknameGenerator
 	{
 		private readonly byte[] _salt;
-		private readonly IWordListProvider _wordListProvider;
 		private readonly NicknameOptions _options;
 		private readonly WordList _wordList;
 		private readonly int _suffixLength;
@@ -36,7 +35,7 @@ namespace NicknameGenerator
 
 			_options = options;
 			_salt = Encoding.UTF8.GetBytes(options.SecretSalt);
-			_wordListProvider = wordListProvider ?? EmbeddedWordListProvider.Instance;
+			IWordListProvider _wordListProvider = wordListProvider ?? EmbeddedWordListProvider.Instance;
 			_wordList = _wordListProvider.Get(options.WordListVersion);
 			_suffixLength = Base62Encoder.GetPaddedLength(options.SuffixBytes);
 		}
@@ -78,7 +77,13 @@ namespace NicknameGenerator
 			return ComputeHash(_input);
 		}
 
-		private byte[] AppendAttempt(byte[] data, int attempt)
+		/// <summary>
+		/// Appends a big-endian 4-byte representation of <paramref name="attempt"/>
+		/// to <paramref name="data"/>. This changes the HMAC input from 16 to 20 bytes
+		/// for <c>attempt &gt; 0</c>, giving an independent hash without disturbing
+		/// <c>attempt = 0</c> golden values.
+		/// </summary>
+		private static byte[] AppendAttempt(byte[] data, int attempt)
 		{
 			byte[] _input = new byte[data.Length + 4];
 			Buffer.BlockCopy(data, 0, _input, 0, data.Length);
@@ -95,9 +100,9 @@ namespace NicknameGenerator
 		private byte[] ComputeHash(byte[] data)
 		{
 #if NET8_0_OR_GREATER
-            byte[] _hash = new byte[32];
-            HMACSHA256.HashData(_salt, data, _hash);
-            return _hash;
+			byte[] _hash = new byte[32];
+			HMACSHA256.HashData(_salt, data, _hash);
+			return _hash;
 #else
 			using HMACSHA256 _hmac = new(_salt);
 			return _hmac.ComputeHash(data);

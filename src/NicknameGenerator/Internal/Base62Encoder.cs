@@ -6,7 +6,7 @@ namespace NicknameGenerator.Internal
 	/// Deterministic base62 encoder. Treats input bytes as a big-endian unsigned integer.
 	/// Big-endian is a fixed choice, not a platform default: golden values depend on it.
 	/// </summary>
-	public static class Base62Encoder
+	internal static class Base62Encoder
 	{
 		private const string ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private const int ALPHABET_LENGTH = 62;

@@ -29,7 +29,5 @@ namespace NicknameGenerator.Abstractions
 			Noun = noun ?? throw new ArgumentNullException(nameof(noun));
 			Suffix = suffix ?? throw new ArgumentNullException(nameof(suffix));
 		}
-
-		public override string ToString() => $"{Adjective}{Noun}_{Suffix}";
 	}
 }

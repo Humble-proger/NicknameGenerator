@@ -1016,7 +1016,7 @@
           "xunit.extensibility.core": "[2.5.3]"
         }
       },
-      "nicknamegenerator": {
+      "Humble-proger.NicknameGenerator": {
         "type": "Project"
       }
     }

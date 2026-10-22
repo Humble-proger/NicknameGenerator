@@ -30,12 +30,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0   # full history for SourceLink / GitVersion later
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
           cache: true
@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-results-${{ matrix.os }}
           path: '**/TestResults/**/*.trx'
@@ -75,7 +75,7 @@ jobs:
 
       - name: Upload coverage
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-${{ matrix.os }}
           path: '**/TestResults/**/coverage.cobertura.xml'
@@ -83,7 +83,7 @@ jobs:
 
       - name: Upload nupkg
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: nupkg
           path: artifacts/*.nupkg

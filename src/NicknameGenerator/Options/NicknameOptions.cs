@@ -18,16 +18,16 @@ namespace NicknameGenerator.Options
 		/// </summary>
 		public int WordListVersion { get; set; } = 1;
 
-		/// <summary>If the arguments go beyond the boundary conditions
+		/// <summary>
 		/// Number of hash bytes used to build the base62 suffix. 5 → 7 chars, 6 → 9 chars.
-		/// More bytes = fewer collisions. See README for the table.
+		/// More bytes = fewer collisions. See README for the collision probability table.
 		/// </summary>
-		/// <value></value>
+		/// <value>Default is 6.</value>
 		public int SuffixBytes { get; set; } = 6;
 
 		/// <summary>
 		/// Separator between the word part and the suffix.
-		/// </summary>If the arguments go beyond the boundary conditions
+		/// </summary>
 		public string Separator { get; set; } = "_";
 
 		/// <summary>

@@ -93,11 +93,6 @@ namespace NicknameGenerator.Tests
 			int[] _counts = new int[bucketCount];
 			Dictionary<string, int> _wordToIndex = [];
 
-			foreach (NicknameParts _ in SampleParts(1))
-			{
-				break;
-			}
-
 			WordList _list = EmbeddedWordListProvider.Instance.Get(1);
 			for (int _i = 0; _i < _list.Adjectives.Count; _i++) _wordToIndex[_list.Adjectives[_i]] = _i;
 			for (int _i = 0; _i < _list.Nouns.Count; _i++) _wordToIndex[_list.Nouns[_i]] = _i;
