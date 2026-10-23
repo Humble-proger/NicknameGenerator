@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Pinned to `3.3.4`: `5.x` requires Roslyn `4.12.0.0`, while the current .NET 8
   SDK ships with `4.11.0.0` (fails with `CS9057`). Will be upgraded when the
   SDK is.
+- BenchmarkDotNet suite for `HmacNicknameGenerator.Generate` (attempt 0 and 1),
+  `GenerateParts`, and `RandomNicknameGenerator.Generate`. Baseline results in
+  the README (416–528 B per call, <1.5 µs on a 2019 mobile CPU).
 
 ### Changed
 
