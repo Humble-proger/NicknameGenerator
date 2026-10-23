@@ -177,12 +177,12 @@ Probability of **at least one** collision among `U` users (birthday bound):
 **Rule of thumb:** `SuffixBytes = 6` is fine up to ~10⁷ users (0.00005%
 collision probability). For 10⁸+ users, use `SuffixBytes = 7` or `8`.
 
-Note: with `SuffixBytes = 5`, the suffix encodes 40 bits into 7 base62 chars.
-Since `62^6 < 2^40 < 62^7`, the first character takes values `'0'`..`'9'` and
-`'a'`..`'j'` (20 possibilities) — no entropy is lost, only the encoding is
-slightly non-uniform. With `SuffixBytes = 6` (default), the first character
-is always `'0'` or `'1'` for the same reason, and the remaining 8 characters
-carry the full 48 bits. This is by design and covered by golden-value tests.
+Note on encoding: with `SuffixBytes = N`, the suffix encodes `8N` bits into `GetPaddedLength(N)` base62 chars. Because `2^(8N)` is not a power of 62, the first character is not uniformly distributed:
+
+- `N = 5` (40 bits): `62^6 < 2^40 < 62^7`. The first character takes values `'0'`..`'9'` and `'a'`..`'j'` (20 possibilities).
+- `N = 6` (default, 48 bits): `62^8 < 2^48 < 62^9`. The first character is `'0'` or `'1'`, never anything else.
+
+The remaining characters carry the rest. The full `8N` bits are recoverable only from the whole suffix — no entropy is lost, only the distribution across positions is slightly non-uniform. This is a mathematical property of encoding a non-power-of-62 value space in base62, not a bug, and it is covered by golden-value tests.
 
 ---
 
