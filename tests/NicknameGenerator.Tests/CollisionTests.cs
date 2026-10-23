@@ -34,7 +34,7 @@ namespace NicknameGenerator.Tests
 				SuffixBytes = suffixBytes,
 			});
 
-			HashSet<string> _seen = new HashSet<string>(capacity: count);
+			HashSet<string> _seen = new(capacity: count);
 			Random _rng = new(SAMPLE_SEED);
 			byte[] _guidBytes = new byte[16];
 
