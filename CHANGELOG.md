@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-23
+
+### Added
+
+- SourceLink support: debugging into `HmacNicknameGenerator` or
+  `RandomNicknameGenerator` from a consuming project now navigates to the exact
+  source commit on GitHub. Enabled via `<PublishRepositoryUrl>true</PublishRepositoryUrl>`
+  and `<EmbedUntrackedSources>true</EmbedUntrackedSources>` in `.csproj`; CI
+  builds with `/p:ContinuousIntegrationBuild=true` for deterministic paths.
+- `Microsoft.CodeAnalysis.PublicApiAnalyzers` — the public API surface is now
+  explicitly tracked in `PublicAPI.Shipped.txt` / `PublicAPI.Unshipped.txt`.
+  Any accidental change to public API (added, removed, or renamed member) will
+  fail the build, preventing unintended breaks before `1.0.0`.
+  Pinned to `3.3.4`: `5.x` requires Roslyn `4.12.0.0`, while the current .NET 8
+  SDK ships with `4.11.0.0` (fails with `CS9057`). Will be upgraded when the
+  SDK is.
+
+### Changed
+
+- Minor style cleanups: simplified local initialization and removed redundant
+  duplicate code paths.
+
+### Fixed
+
+- `DistributionTests`: corrected chi-square critical values for `α = 0.01`.
+  - `df = 59`: `88.4` → `87.1657`
+  - `df = 61`: `95.0` (also inconsistent with the message) → `89.5913`
+  The previous higher thresholds made the uniformity tests blind to moderate
+  distribution anomalies — a real regression would slip through if χ² landed
+  between the correct and inflated values.
+
 ## [0.2.0] - 2026-10-22
 
 ### Added
@@ -64,5 +95,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Distribution (χ²) and collision tests for statistical guarantees.
 
 [Unreleased]: https://github.com/Humble-proger/NicknameGenerator/compare/v0.2.0...HEAD
+[0.3.0]: https://github.com/Humble-proger/NicknameGenerator/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/Humble-proger/NicknameGenerator/compare/v0.1.0-alpha...v0.2.0
 [0.1.0-alpha]: https://github.com/Humble-proger/NicknameGenerator/releases/tag/v0.1.0-alpha
