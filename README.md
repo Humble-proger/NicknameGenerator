@@ -197,6 +197,37 @@ The remaining characters carry the rest. The full `8N` bits are recoverable only
 
 ---
 
+## Performance
+
+Measured with [BenchmarkDotNet](https://benchmarkdotnet.org/) v0.15.8, single-thread,
+workstation GC, .NET 8.0.30.
+
+**Environment:** Intel Core i9-9880H (mobile, 2.30 GHz base), macOS 15.7.2.
+Numbers are per-call, including HMAC-SHA256 computation. Baseline: `Hmac_Attempt0`.
+
+| Method              | Mean       | Allocated |
+|-------------------- |-----------:|----------:|
+| Hmac_Attempt0       | 1,246.0 ns |     416 B |
+| Hmac_Attempt1       | 1,373.4 ns |     528 B |
+| Hmac_Attempt0_Parts | 1,210.3 ns |     352 B |
+| Random              |   789.5 ns |     384 B |
+
+**Takeaways:**
+
+- Generating a nickname costs **under 1.5 µs** and **under 550 B**. Safe on any
+  hot path — registration, profile load, "refresh" button.
+- `attempt > 0` adds **~130 ns and ~112 B** for the extra HMAC input byte. Retry
+  is the rare path — accept the cost.
+- **`GenerateParts` saves ~64 B** if you don't need the final string — useful
+  when storing structured data (adjective/noun/suffix columns).
+- `Random` is **~1.6× faster** than HMAC (no cryptographic hashing).
+- All allocations are short-lived Gen0 objects — no GC pressure under load.
+
+> Re-run on your hardware:
+> `dotnet run -c Release --project benchmarks/NicknameGenerator.Benchmarks`
+
+---
+
 ## Word lists and versioning
 
 Word lists are **embedded in the DLL** and **frozen per version**:
