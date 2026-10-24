@@ -20,7 +20,7 @@
     <AssemblyName>NicknameGenerator.DependencyInjection</AssemblyName>
 
     <PackageId>Humble-proger.NicknameGenerator.DependencyInjection</PackageId>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <Description>Dependency injection extensions for NicknameGenerator. Registers INicknameGenerator and IRandomNicknameGenerator with IOptions validation.</Description>
     <PackageTags>nickname;username;hmac;deterministic;di;dependency-injection;aspnetcore</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
