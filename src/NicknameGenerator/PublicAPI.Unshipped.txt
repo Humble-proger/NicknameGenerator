@@ -1,0 +1,41 @@
+#nullable enable
+NicknameGenerator.Abstractions.INicknameGenerator
+NicknameGenerator.Abstractions.INicknameGenerator.Generate(System.Guid userId) -> string!
+NicknameGenerator.Abstractions.IRandomNicknameGenerator
+NicknameGenerator.Abstractions.IRandomNicknameGenerator.Generate() -> string!
+NicknameGenerator.Abstractions.IRetryableNicknameGenerator
+NicknameGenerator.Abstractions.IRetryableNicknameGenerator.Generate(System.Guid userId, int attempt) -> string!
+NicknameGenerator.Abstractions.IRetryableNicknameGenerator.GenerateParts(System.Guid userId, int attempt) -> NicknameGenerator.Abstractions.NicknameParts!
+NicknameGenerator.Abstractions.IWordListProvider
+NicknameGenerator.Abstractions.IWordListProvider.Get(int version) -> NicknameGenerator.Abstractions.WordList!
+NicknameGenerator.Abstractions.NicknameParts
+NicknameGenerator.Abstractions.NicknameParts.Adjective.get -> string!
+NicknameGenerator.Abstractions.NicknameParts.NicknameParts(string! adjective, string! noun, string! suffix) -> void
+NicknameGenerator.Abstractions.NicknameParts.Noun.get -> string!
+NicknameGenerator.Abstractions.NicknameParts.Suffix.get -> string!
+NicknameGenerator.Abstractions.RetryableNicknameGeneratorExtensions
+NicknameGenerator.Abstractions.WordList
+NicknameGenerator.Abstractions.WordList.Adjectives.get -> System.Collections.Generic.IReadOnlyList<string!>!
+NicknameGenerator.Abstractions.WordList.Nouns.get -> System.Collections.Generic.IReadOnlyList<string!>!
+NicknameGenerator.Abstractions.WordList.Version.get -> int
+NicknameGenerator.Abstractions.WordList.WordList(int version, System.Collections.Generic.IReadOnlyList<string!>! adjectives, System.Collections.Generic.IReadOnlyList<string!>! nouns) -> void
+NicknameGenerator.HmacNicknameGenerator
+NicknameGenerator.HmacNicknameGenerator.Generate(System.Guid userId) -> string!
+NicknameGenerator.HmacNicknameGenerator.Generate(System.Guid userId, int attempt) -> string!
+NicknameGenerator.HmacNicknameGenerator.GenerateParts(System.Guid userId, int attempt) -> NicknameGenerator.Abstractions.NicknameParts!
+NicknameGenerator.HmacNicknameGenerator.HmacNicknameGenerator(NicknameGenerator.Options.NicknameOptions! options, NicknameGenerator.Abstractions.IWordListProvider? wordListProvider = null) -> void
+NicknameGenerator.Options.NicknameOptions
+NicknameGenerator.Options.NicknameOptions.NicknameOptions() -> void
+NicknameGenerator.Options.NicknameOptions.SecretSalt.get -> string!
+NicknameGenerator.Options.NicknameOptions.SecretSalt.set -> void
+NicknameGenerator.Options.NicknameOptions.Separator.get -> string!
+NicknameGenerator.Options.NicknameOptions.Separator.set -> void
+NicknameGenerator.Options.NicknameOptions.SuffixBytes.get -> int
+NicknameGenerator.Options.NicknameOptions.SuffixBytes.set -> void
+NicknameGenerator.Options.NicknameOptions.Validate(bool requireSecretSalt = true) -> void
+NicknameGenerator.Options.NicknameOptions.WordListVersion.get -> int
+NicknameGenerator.Options.NicknameOptions.WordListVersion.set -> void
+NicknameGenerator.RandomNicknameGenerator
+NicknameGenerator.RandomNicknameGenerator.Generate() -> string!
+NicknameGenerator.RandomNicknameGenerator.RandomNicknameGenerator(NicknameGenerator.Options.NicknameOptions! options, NicknameGenerator.Abstractions.IWordListProvider? wordListProvider = null) -> void
+static NicknameGenerator.Abstractions.RetryableNicknameGeneratorExtensions.GenerateWithRetry(this NicknameGenerator.Abstractions.IRetryableNicknameGenerator! generator, System.Guid userId, System.Func<string!, bool>! isAvailable, int maxAttempts = 16) -> string!

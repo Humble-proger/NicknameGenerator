@@ -1,0 +1,5 @@
+#nullable enable
+NicknameGenerator.DependencyInjection.ServiceCollectionExtensions
+static NicknameGenerator.DependencyInjection.ServiceCollectionExtensions.AddNicknameGenerator(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, Microsoft.Extensions.Configuration.IConfiguration! configuration, string! sectionName = "Nickname") -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static NicknameGenerator.DependencyInjection.ServiceCollectionExtensions.AddNicknameGenerator(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<NicknameGenerator.Options.NicknameOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static NicknameGenerator.DependencyInjection.ServiceCollectionExtensions.AddRandomNicknameGenerator(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<NicknameGenerator.Options.NicknameOptions!>? configure = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

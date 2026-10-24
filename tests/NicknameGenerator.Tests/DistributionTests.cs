@@ -14,7 +14,8 @@ namespace NicknameGenerator.Tests
 	{
 		private const string TEST_SALT = "0123456789abcdef0123456789abcdef";
 		private const int SAMPLE_SIZE = 60_000;   // ~1000 per bucket with 60 words → χ² valid
-		private const double CHISQUARECRITICAL_59DF_01 = 88.4;   // α=0.01, df=59
+		private const double CHISQUARECRITICAL_59DF_01 = 87.1657;   // α=0.01, df=59
+		private const double CHISQUARECRITICAL_61DF_01 = 89.5913;
 		private const int SAMPLE_SEED = 20240101;  // fixed → deterministic test
 
 		[Fact]
@@ -69,8 +70,8 @@ namespace NicknameGenerator.Tests
 				_chiSq += _diff * _diff / (double)_expected;
 			}
 
-			Assert.True(_chiSq < 95.0,
-				$"Last suffix character not uniform: χ²={_chiSq:F1} (df=61, critical≈90.5).");
+			Assert.True(_chiSq < CHISQUARECRITICAL_61DF_01,
+				$"Last suffix character not uniform: χ²={_chiSq:F1}, critical≈{CHISQUARECRITICAL_61DF_01} (df=61, α=0.01).");
 		}
 
 		// --- helpers ---

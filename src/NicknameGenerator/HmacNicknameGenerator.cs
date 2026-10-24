@@ -40,11 +40,7 @@ namespace NicknameGenerator
 			_suffixLength = Base62Encoder.GetPaddedLength(options.SuffixBytes);
 		}
 
-		public string Generate(Guid userId)
-		{
-			NicknameParts _parts = GenerateParts(userId, 0);
-			return $"{_parts.Adjective}{_parts.Noun}{_options.Separator}{_parts.Suffix}";
-		}
+		public string Generate(Guid userId) => Generate(userId, 0);
 
 		public string Generate(Guid userId, int attempt)
 		{
