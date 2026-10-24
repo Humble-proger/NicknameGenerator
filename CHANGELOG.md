@@ -26,6 +26,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BenchmarkDotNet suite for `HmacNicknameGenerator.Generate` (attempt 0 and 1),
   `GenerateParts`, and `RandomNicknameGenerator.Generate`. Baseline results in
   the README (416–528 B per call, <1.5 µs on a 2019 mobile CPU).
+- Samples:
+  - `samples/Console` — minimal quick-start.
+  - `samples/AspNetCore` — Minimal API + DI + `IRetryableNicknameGenerator`
+    endpoint.
+  - `samples/Unity` — README + `Example.cs` (DLL deployment, `link.xml` for
+    IL2CPP).
+- Integration tests (`tests/NicknameGenerator.Integration.Tests`) using
+  `WebApplicationFactory<Program>` — verifies DI + options binding + HTTP
+  contract end-to-end.
 
 ### Changed
 
