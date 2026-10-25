@@ -123,5 +123,82 @@ namespace NicknameGenerator.Tests
 			Assert.Throws<InvalidOperationException>(
 				() => _gen.GenerateWithRetry(_testGuid, _ => false, maxAttempts: 3));
 		}
+
+		[Fact]
+		public async Task GenerateWithRetryAsync_FindsFreeNickname()
+		{
+			HmacNicknameGenerator _gen = Create();
+			HashSet<string> _used = [];
+			Random _rng = new(20240106);
+			byte[] _guidBytes = new byte[16];
+
+			for (int _user = 0; _user < 100; _user++)
+			{
+				_rng.NextBytes(_guidBytes);
+				Guid _userId = new(_guidBytes);
+
+				string _nick = await _gen.GenerateWithRetryAsync(
+					_userId, n => Task.FromResult(!_used.Contains(n)));
+				Assert.True(_used.Add(_nick));
+			}
+		}
+
+		[Fact]
+		public async Task GenerateWithRetryAsync_ThrowsWhenAllTaken()
+		{
+			HmacNicknameGenerator _gen = Create();
+			await Assert.ThrowsAsync<InvalidOperationException>(
+				() => _gen.GenerateWithRetryAsync(_testGuid, _ => Task.FromResult(false), maxAttempts: 3));
+		}
+
+		[Fact]
+		public async Task GenerateWithRetryAsync_RespectsCancellation()
+		{
+			HmacNicknameGenerator _gen = Create();
+			using CancellationTokenSource _cts = new();
+			int _calls = 0;
+
+			Func<string, Task<bool>> _isAvailable = _ =>
+			{
+				_calls++;
+				if (_calls >= 3) _cts.Cancel();
+				return Task.FromResult(false);
+			};
+
+			await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+				_gen.GenerateWithRetryAsync(_testGuid, _isAvailable, maxAttempts: 100, ct: _cts.Token));
+
+			Assert.True(_calls >= 3);
+		}
+
+		[Fact]
+		public async Task GenerateWithRetryAsync_IsDeterministic()
+		{
+			HmacNicknameGenerator _gen = Create();
+			string _attempt0 = _gen.Generate(_testGuid, 0);
+			string _attempt1 = _gen.Generate(_testGuid, 1);
+
+			Func<string, Task<bool>> _isAvailable = n =>
+				Task.FromResult(n != _attempt0 && n != _attempt1);
+
+			string _r1 = await _gen.GenerateWithRetryAsync(_testGuid, _isAvailable);
+			string _r2 = await _gen.GenerateWithRetryAsync(_testGuid, _isAvailable);
+
+			Assert.Equal(_r1, _r2);
+			Assert.Equal(_gen.Generate(_testGuid, 2), _r1);  // должно быть attempt=2
+		}
+
+		[Fact]
+		public async Task GenerateWithRetryAsync_ThrowsOnNullArguments()
+		{
+			HmacNicknameGenerator _gen = Create();
+
+			await Assert.ThrowsAsync<ArgumentNullException>(() =>
+				RetryableNicknameGeneratorExtensions.GenerateWithRetryAsync(
+					null!, _testGuid, _ => Task.FromResult(true)));
+
+			await Assert.ThrowsAsync<ArgumentNullException>(() =>
+				_gen.GenerateWithRetryAsync(_testGuid, null!));
+		}
 	}
 }

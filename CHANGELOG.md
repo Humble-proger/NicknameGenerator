@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- `RetryableNicknameGeneratorExtensions.GenerateWithRetryAsync` — async
+  version of the retry helper for scenarios where the availability check
+  performs I/O (database, HTTP). The generator itself remains synchronous
+  (CPU-bound); only the `isAvailableAsync` callback is awaited.
+
 ## [0.3.0] - 2026-10-23
 
 ### Added

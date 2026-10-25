@@ -18,6 +18,15 @@ _app.MapGet("/api/nickname/{userId:guid}", (Guid userId, INicknameGenerator gene
 _app.MapGet("/api/nickname/{userId:guid}/attempt/{attempt:int}", (Guid userId, int attempt, IRetryableNicknameGenerator generator) =>
 	Results.Ok(new { userId, attempt, nickname = generator.Generate(userId, attempt) }));
 
+_app.MapGet("/api/nickname/{userId:guid}/retry", async (Guid userId, IRetryableNicknameGenerator gen, CancellationToken ct) =>
+{
+	HashSet<string> _taken = [gen.Generate(userId, 0)];
+
+	string _nick = await gen.GenerateWithRetryAsync(userId, nick => Task.FromResult(!_taken.Contains(nick)), ct: ct);
+
+	return Results.Ok(new { userId, nickname = _nick });
+});
+
 _app.Run();
 
 // Required for WebApplicationFactory<Program> in integration tests.
